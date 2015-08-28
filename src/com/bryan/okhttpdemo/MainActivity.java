@@ -1,8 +1,15 @@
 package com.bryan.okhttpdemo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -146,6 +153,9 @@ public class MainActivity extends Activity {
 		});
                  
 	}
+	
+	
+
 	
 	
 	

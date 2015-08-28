@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bryan.okhttpdemo.domain.Course;
 import com.bryan.okhttpdemo.utils.OkHttpClientManager;
@@ -42,7 +43,7 @@ public class TestActivity extends Activity
 
     }
 
-    public void getUser(View view)
+    public void getCourse(View view)
     {
        OkHttpClientManager.getAsyn(SERVER_IP+"ListServlet", new OkHttpClientManager.ResultCallback<String>() {
 
@@ -62,7 +63,7 @@ public class TestActivity extends Activity
     }
 
 
-    public void getUsers(View view)
+    public void getCourses(View view)
     {
         OkHttpClientManager.getAsyn(SERVER_IP+"ListServlet?format=json",
                 new OkHttpClientManager.ResultCallback<List<Course>>()
@@ -109,37 +110,52 @@ public class TestActivity extends Activity
 
     public void getImage(View view)
     {
-        OkHttpClientManager.displayImage(mImageView, "http://pic.joke01.com/uppic/12-12/17/17230409.jpg");
+        OkHttpClientManager.getDisplayImageDelegate().displayImage(mImageView, "http://pic.joke01.com/uppic/12-12/17/17230409.jpg");
     }
 
     public void uploadFile(View view) throws IOException
     {
         File file = new File(Environment.getExternalStorageDirectory(), "abc.mp3");
+        
+//        OkHttpClientManager.getInstance().getPostDelegate().postAsyn(SERVER_IP+"UploadFileServlet",
+//        		file,//
+//                new OkHttpClientManager.ResultCallback<String>()
+//                        {
+//                            @Override
+//                            public void onError(Request request, Exception e)
+//                            {
+//                                e.printStackTrace();
+//                            }
+//
+//                            @Override
+//                            public void onResponse(String filePath)
+//                            {
+//                            	Toast.makeText(getBaseContext(), "上传成功:"+filePath, 0).show();
+//                            }
+//                        }
+//        );
 
-        /*OkHttpClientManager.postAsyn("http://192.168.1.103:8080/okHttpServer/fileUpload", null, new OkHttpClientManager.Param[]{
-                new OkHttpClientManager.Param("username", "zhy"),
-                new OkHttpClientManager.Param("password", "123")});
-                */
-        OkHttpClientManager.postAsyn(SERVER_IP+"UploadFileServlet",//
-                new OkHttpClientManager.ResultCallback<String>()
-                {
-                    @Override
-                    public void onError(Request request, Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(String filePath)
-                    {
-                        Log.e("TAG", filePath);
-                    }
-                },//
-                file,//
-                "formfile",//
+      
+        OkHttpClientManager.getUploadDelegate().postAsyn(SERVER_IP+"UploadFileServlet",//
+        		"formfile",//
+        		file,//
                 new OkHttpClientManager.Param[]{
                         new OkHttpClientManager.Param("filename", "发如雪"),
-                        new OkHttpClientManager.Param("filedes", "周杰伦的哥")}
+                        new OkHttpClientManager.Param("filedes", "周杰伦的哥")},
+                new OkHttpClientManager.ResultCallback<String>()
+                        {
+                            @Override
+                            public void onError(Request request, Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onResponse(String filePath)
+                            {
+                            	Toast.makeText(getBaseContext(), "上传成功:"+filePath, 0).show();
+                            }
+                        }
         );
     }
 
@@ -147,7 +163,7 @@ public class TestActivity extends Activity
     public void downloadFile(View view) throws Exception
     {
        //不能下载中文
-        OkHttpClientManager.downloadAsyn(SERVER_IP+"files/qa.docx",
+        OkHttpClientManager.getDownloadDelegate().downloadAsyn(SERVER_IP+"files/qa.docx",
                 Environment.getExternalStorageDirectory().getAbsolutePath(),
                 new OkHttpClientManager.ResultCallback<String>()
                 {
@@ -161,7 +177,7 @@ public class TestActivity extends Activity
                     public void onResponse(String response)
                     {
                     	//下载后的文件路径
-                    	Log.e("TAG", response);
+                    	Toast.makeText(getBaseContext(), "下载成功:"+response, 0).show();
                     }
                 });
     	
