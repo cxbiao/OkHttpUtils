@@ -139,7 +139,7 @@ public class TestActivity extends Activity
 
     public void uploadFile(View view) throws IOException
     {
-        File file = new File(Environment.getExternalStorageDirectory(), "abc.mp3");
+        File file = new File(Environment.getExternalStorageDirectory(), "qq中国.jpg");
         
 //        OkHttpClientManager.getInstance().getPostDelegate().postAsyn(SERVER_IP+"UploadFileServlet",
 //        		file,//

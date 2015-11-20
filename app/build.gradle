@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.bryan.okhttpdemo"
@@ -22,7 +22,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.android.support:support-v4:23.1.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile files('libs/fastjson-1.1.45.android.jar')
 }
